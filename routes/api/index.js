@@ -12,6 +12,7 @@ router.post("/tasks", async function (req, res, next) {
 /* タスク一覧を取得するルーティング*/
 router.get("/tasks", async function (req, res, next) {
   const getTasks = await tasks.getTasks();
+  console.log(getTasks);
   res.send(getTasks);
 });
 

@@ -31,7 +31,7 @@
         +新規登録
       </button>
 
-      <ul class="list-group">
+      <ul class="list-group" id="todo-list">
         <li class="list-group-item category-orange">
           <div class="row align-items-center">
             <div class="col-6">
@@ -271,6 +271,40 @@
           "//" + window.location.host + "/api/tasks"
         );
         console.log(response);
+        const list = response.map((item)=>{
+          return
+          `<li class="list-group-item category-orange">
+            <div class="row align-items-center">
+              <div class="col-6">
+                <div>${item.task_name}</div>
+              </div>
+              <div class="col-3">
+                <div>${item.deadline}</div>
+              </div>
+              <div class="col-3">
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#update-modal"
+                >
+                  更新
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-danger delete"
+                  data-delete="犬の散歩をする"
+                >
+                  削除
+                </button>
+              </div>
+            </div>
+          </li>`;
+        });
+        alert(1);
+        $("#todo-list").append(list);
+        alert(2);
       });
 
       // 削除
