@@ -57,13 +57,12 @@ getTasks = async function () {
 deleteTasksId = async function (id) {
   let connection = null;
   try {
+    console.log(id);
     connection = await mysql.createConnection(config.dbSetting);
     // ここに SQL を記述する
     const sql = "DELETE from t_task WHERE id = ?;";
     let d = [id];
     const [rows, fields] = await connection.query(sql, d);
-
-    // console.log(rows);
     return rows;
   } catch (err) {
     console.log(err);
@@ -74,7 +73,7 @@ deleteTasksId = async function (id) {
 
 /**
  * タスクを１件取得する API
- *
+ *csc
  * @returns レスポンス JSON
  */
 getTasksId = async function (id) {

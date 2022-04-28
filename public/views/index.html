@@ -32,61 +32,6 @@
       </button>
 
       <ul class="list-group" id="todo-list">
-        <li class="list-group-item category-orange">
-          <div class="row align-items-center">
-            <div class="col-6">
-              <div>犬の散歩をする</div>
-            </div>
-            <div class="col-3">
-              <div>2022年4月14日</div>
-            </div>
-            <div class="col-3">
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-toggle="modal"
-                data-target="#update-modal"
-              >
-                更新
-              </button>
-
-              <button
-                type="button"
-                class="btn btn-danger delete"
-                data-delete="犬の散歩をする"
-              >
-                削除
-              </button>
-            </div>
-          </div>
-        </li>
-        <li class="list-group-item category-green">
-          <div class="row align-items-center">
-            <div class="col-6">
-              <div>勉強をする</div>
-            </div>
-            <div class="col-3">
-              <div>2022年4月14日</div>
-            </div>
-            <div class="col-3">
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-toggle="modal"
-                data-target="#update-modal"
-              >
-                更新
-              </button>
-              <button
-                type="button"
-                class="btn btn-danger delete"
-                data-delete="勉強をする"
-              >
-                削除
-              </button>
-            </div>
-          </div>
-        </li>
       </ul>
     </div>
 
@@ -270,9 +215,11 @@
         const response = await httpGet(
           "//" + window.location.host + "/api/tasks"
         );
+
         console.log(response);
-        const list = response.map((item)=>{
-          return
+        let string = '';
+        response.map((item)=>{
+          string =
           `<li class="list-group-item category-orange">
             <div class="row align-items-center">
               <div class="col-6">
@@ -294,23 +241,26 @@
                 <button
                   type="button"
                   class="btn btn-danger delete"
-                  data-delete="犬の散歩をする"
+                  data-delete="${item.task_name}"
+                  data-id ="${item.id}"
                 >
                   削除
                 </button>
               </div>
             </div>
           </li>`;
+            $("#todo-list").append(string);
         });
-        alert(1);
-        $("#todo-list").append(list);
-        alert(2);
-      });
-
+});
       // 削除
-      $(".delete").on("click", function () {
+      $(document).on("click", ".delete", async function () {
         const taskName = $(this).data("delete");
+        const id = $(this).data("id");
         alert(`下記の内容を削除します。\n ${taskName}`);
+        const response = await httpDelete(
+          "//" + window.location.host + `/api/tasks/${id}`
+        );
+        window.location.reload();
       });
 
       // 新規登録
@@ -325,6 +275,7 @@
           data
         );
         console.log(response);
+        window.location.reload();
       });
     </script>
   </body>

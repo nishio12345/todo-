@@ -18,6 +18,7 @@ router.get("/tasks", async function (req, res, next) {
 
 /* タスク一覧を削除するルーティング */
 router.delete("/tasks/:id", async function (req, res, next) {
+  console.log(req.params);
   const deleteTasksId = await tasks.deleteTasksId(req.params.id);
   res.send(deleteTasksId);
 });
